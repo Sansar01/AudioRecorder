@@ -85,7 +85,7 @@ function Microphone() {
                                 {mediaBlobUrl && (
                                     <>
                                         <h4 className="mb-3">Your Recorded Audio:</h4>
-                                        <audio controls src={mediaBlobUrl} className="w-100 mb-3"></audio>
+                                        <audio controls src={mediaUrl} className="w-100 mb-3"></audio>
 
                                         {/* Transcription button */}
                                         <button
