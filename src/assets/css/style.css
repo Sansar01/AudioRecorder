@@ -1,0 +1,11 @@
+.status-text {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 576px) {
+    .btn-lg {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }
+  
