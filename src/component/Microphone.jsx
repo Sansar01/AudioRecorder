@@ -9,6 +9,7 @@ function Microphone() {
 
     const [isRecording, setIsRecording] = useState(false); // State to track recording
     const [transcript, setTranscript] = useState(''); // State to store transcription
+    const [mediaUrl, setMediaUrl] = useState(null); // This will store the mediaBlobUrl
     const [isLoading, setIsLoading] = useState(false); // Loading state for transcription
     const [error, setError] = useState(''); // State to store error messages
 
@@ -20,7 +21,7 @@ function Microphone() {
 
         try {
             const response = await axios.post(
-                'https://api.deepgram.com/v1/listen',
+                'https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true',
                 audioBlob,
                 {
                     headers: {
@@ -66,10 +67,13 @@ function Microphone() {
                                 onClick={() => {
                                     if (isRecording) {
                                         stopRecording();
-                                        setIsRecording(false);
+                                        setIsRecording(false); // stop recording
+                                        setMediaUrl(mediaBlobUrl); // Set mediaBlobUrl only after stopping recording
                                     } else {
                                         startRecording();
                                         setIsRecording(true);
+                                        setMediaUrl(null); // Clear audio player when starting new recording
+                                        setTranscript(null); // Reset transcription
                                     }
                                 }}
                             >
