@@ -82,7 +82,7 @@ function Microphone() {
                             </button>
 
                             <div className="mt-5">
-                                {mediaUrl && (
+                                {!isRecording && mediaUrl && (
                                     <>
                                         <h4 className="mb-3">Your Recorded Audio:</h4>
                                         <audio controls src={mediaUrl} className="w-100 mb-3"></audio>
