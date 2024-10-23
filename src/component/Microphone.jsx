@@ -9,7 +9,6 @@ function Microphone() {
 
     const [isRecording, setIsRecording] = useState(false); // State to track recording
     const [transcript, setTranscript] = useState(''); // State to store transcription
-    const [mediaUrl, setMediaUrl] = useState(null); // This will store the mediaBlobUrl
     const [isLoading, setIsLoading] = useState(false); // Loading state for transcription
     const [error, setError] = useState(''); // State to store error messages
 
@@ -21,7 +20,7 @@ function Microphone() {
 
         try {
             const response = await axios.post(
-                'https://api.deepgram.com/v1/listen?model=nova-2&smart_format=true',
+                'https://api.deepgram.com/v1/listen',
                 audioBlob,
                 {
                     headers: {
@@ -68,12 +67,10 @@ function Microphone() {
                                     if (isRecording) {
                                         stopRecording();
                                         setIsRecording(false); // stop recording
-                                        setMediaUrl(mediaBlobUrl); // Set mediaBlobUrl only after stopping recording
                                     } else {
-                                        startRecording();
+                                        setTranscript(null); // Clear transcription when starting new recording
                                         setIsRecording(true);
-                                        setMediaUrl(null); // Clear audio player when starting new recording
-                                        setTranscript(null); // Reset transcription
+                                        startRecording();
                                     }
                                 }}
                             >
@@ -82,16 +79,16 @@ function Microphone() {
                             </button>
 
                             <div className="mt-5">
-                                {!isRecording && mediaUrl && (
+                                { mediaBlobUrl && (
                                     <>
                                         <h4 className="mb-3">Your Recorded Audio:</h4>
-                                        <audio controls src={mediaUrl} className="w-100 mb-3"></audio>
+                                        <audio controls src={mediaBlobUrl} className="w-100 mb-3"></audio>
 
                                         {/* Transcription button */}
                                         <button
                                             className="btn btn-success btn-lg"
                                             onClick={async () => {
-                                                const audioBlob = await fetch(mediaUrl).then((res) => res.blob());
+                                                const audioBlob = await fetch(mediaBlobUrl).then((res) => res.blob());
                                                 transcribeAudio(audioBlob);
                                             }}
                                             disabled={isLoading}
