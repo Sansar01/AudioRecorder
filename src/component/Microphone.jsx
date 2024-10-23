@@ -82,7 +82,7 @@ function Microphone() {
                             </button>
 
                             <div className="mt-5">
-                                {mediaBlobUrl && (
+                                {mediaUrl && (
                                     <>
                                         <h4 className="mb-3">Your Recorded Audio:</h4>
                                         <audio controls src={mediaUrl} className="w-100 mb-3"></audio>
@@ -91,7 +91,7 @@ function Microphone() {
                                         <button
                                             className="btn btn-success btn-lg"
                                             onClick={async () => {
-                                                const audioBlob = await fetch(mediaBlobUrl).then((res) => res.blob());
+                                                const audioBlob = await fetch(mediaUrl).then((res) => res.blob());
                                                 transcribeAudio(audioBlob);
                                             }}
                                             disabled={isLoading}
